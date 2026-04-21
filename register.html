@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YLG Bullion - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        :root {
+            --color-dark-bg: #111111;
+            --color-panel-bg: #1A1A1A;
+            --color-gold-accent: #FFD700;
+            --color-text-light: #E0E0E0;
+            --color-text-fade: #A0A0A0;
+            --color-info: #3498db;
+            --color-white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Noto Sans Myanmar', 'Noto Sans Thai', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-dark-bg);
+            color: var(--color-text-light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .register-container {
+            width: 450px;
+            background-color: var(--color-panel-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border-top: 5px solid var(--color-info);
+        }
+
+        .logo-section { margin-bottom: 25px; }
+        .logo-y-text { font-size: 48px; font-weight: bold; color: var(--color-gold-accent); line-height: 1; }
+        .logo-subtext { font-size: 20px; font-weight: bold; color: var(--color-text-light); letter-spacing: 2px; margin-top: 5px; }
+
+        h2 { font-size: 24px; margin-bottom: 30px; color: var(--color-text-light); }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-input-wrapper { position: relative; }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            background-color: #333333;
+            border: 1px solid #555555;
+            color: var(--color-text-light);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus { border-color: var(--color-info); outline: none; }
+        .input-icon { position: absolute; top: 50%; left: 12px; transform: translateY(-50%); color: var(--color-text-fade); }
+
+        .btn-register {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--color-info);
+            color: var(--color-white);
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-register:hover { background-color: #2980b9; }
+        .btn-register:disabled { background-color: #555; cursor: not-allowed; }
+
+        .link-text { margin-top: 25px; font-size: 14px; color: var(--color-text-fade); }
+        .link-text a { color: var(--color-gold-accent); text-decoration: none; font-weight: bold; }
+        
+        .agreement { font-size: 12px; color: var(--color-text-fade); margin-top: 15px; text-align: left; }
+        .agreement a { color: var(--color-info); }
+    </style>
+    <link rel="stylesheet" href="mobile-responsive.css">
+</head>
+<body>
+
+
+    <aside class="sidebar" style="position: absolute; left: 0; top: 0; height: 100vh; width: 260px; background: #2A2A2A; border-right: 1px solid #333; display: flex; flex-direction: column; z-index: 10;">
+        <div class="logo-section">
+            <div class="logo-y-text">YLG</div>
+            <div class="logo-subtext">BULLION TRADING</div>
+        </div>
+        
+    </aside>
+    <div class="register-container" style="margin-left: 260px;">
+
+        <h2>ᬡᬬᬱᬬ�ᬷᬺ�~�&ᬺ �&ᬬ�:�ᬺᬸ�~ᬽ�ᬺᬸ�:�ᬺ (Register)</h2>
+
+        <form id="registerForm">
+             <div class="form-group">
+                <div class="form-input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="fullname" class="form-input" placeholder="ᬡ�"�`ᬺ ᬡ�"ᬼ�`ᬷᬺᬡ�&ᬯᬶ (Full Name)" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="form-input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" class="form-input" placeholder="ᬡᬮᬸ�"ᬱᬸ�Sᬺ (Email Address)" required>
+                </div>
+            </div>
+            
+             <div class="form-group">
+                <div class="form-input-wrapper">
+                    <i class="fas fa-phone input-icon"></i>
+                    <input type="text" id="phone" class="form-input" placeholder="�ᬯ�ᬺᬸ�ᬶ�"ᬫᬐᬺ (Phone Number)" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" class="form-input" placeholder="�Sᬻᬾᬭᬯᬷᬝᬾᬬᬺ�ᬶ�"ᬫᬐᬺ (Password)" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="form-input-wrapper">
+                    <i class="fas fa-check-double input-icon"></i>
+                    <input type="password" id="confirm-password" class="form-input" placeholder="�Sᬻᬾᬭᬯᬷᬝᬾᬬᬺ�ᬶ�"ᬫᬐᬺ ᬡᬐ�`ᬺ�"ᬼᬯ�:�ᬺ" required>
+                </div>
+            </div>
+            
+            <p class="agreement">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</label>
+            </p>
+
+            <button type="submit" id="submitBtn" class="btn-register"><i class="fas fa-user-plus"></i> �&ᬬ�:�ᬺᬸ�~ᬽ�ᬺᬸ�:�ᬺ</button>
+        </form>
+
+        <p class="link-text">
+            ᬡᬬᬱᬬ�ᬷᬺ �:ᬾᬭ�"ᬼᬮᬸ�~ᬬᬸ�Sᬬᬸ? <a href="login.html">ᬝ�ᬺ�:ᬱᬬᬬᬺ�:�ᬺ (Login)</a>
+        </p>
+    </div>
+
+ 
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBCvOnGL0ptipChgxuCtHzviZb9DZ3MAIk",
+        authDomain: "ylg-bullion-7dac6.firebaseapp.com",
+        projectId: "ylg-bullion-7dac6",
+        storageBucket: "ylg-bullion-7dac6.firebasestorage.app",
+        messagingSenderId: "1076979932884",
+        appId: "1:1076979932884:web:8755edb4ccac71f69b6541",
+        measurementId: "G-D16RR76JEP"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const MySwal = Swal.mixin({
+        background: '#2A2A2A',
+        color: '#fff',
+        confirmButtonColor: '#3498db'
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('fullname').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        const submitBtn = document.getElementById('submitBtn');
+
+        if(password !== confirmPassword) {
+            MySwal.fire({ icon: 'warning', title: '�"ᬾᬬᬸ�aᬽ�ᬺᬸ�ᬱ�"ᬫ�~�`ᬺ', text: '�Sᬻᬾᬭᬯᬷᬝᬾᬬᬺ�ᬶ�"ᬫᬐᬺ�"ᬻᬬᬸ �"ᬐᬰ�`ᬮ�"ᬫ�` �"ᬼ�ᬺ�&�&ᬺ�"ᬱᬸ�"ᬫ�9' });
+            return;
+        }
+
+        if(password.length < 6) {
+            MySwal.fire({ icon: 'warning', title: 'Password ᬡᬬᬸ��`ᬺᬸ�ᬱ�"ᬫ�~�`ᬺ', text: 'Password �~�`ᬺ ᬡ��`ᬺᬸ� ᬯᬶᬸ �&ᬬ�Sᬯᬶᬸ �  �Sᬯᬶᬸ �:ᬾᬭ�:�"ᬫ�"�`ᬺ�9' });
+            return;
+        }
+
+        try {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ᬁᬏ�&ᬱᬬ�ᬷᬺ�"ᬫ...';
+
+            const counterRef = doc(db, "settings", "userCounter");
+            let newMemberIndex = 1;
+
+            await runTransaction(db, async (transaction) => {
+                const counterSnap = await transaction.get(counterRef);
+                if (counterSnap.exists()) {
+                    newMemberIndex = counterSnap.data().lastIndex + 1;
+                    transaction.update(counterRef, { lastIndex: newMemberIndex });
+                } else {
+                    transaction.set(counterRef, { lastIndex: 1 });
+                    newMemberIndex = 1;
+                }
+            });
+
+            // �S& ID Formatting Logic (YLG-2026-0001 �"ᬯᬶ�&ᬶ�ᬱᬬᬺᬁᬼ�ᬺᬸ)
+            const currentYear = new Date().getFullYear();
+            const formattedIndex = String(newMemberIndex).padStart(4, '0'); // �ᬶ�"ᬫᬐᬺᬬᬭᬯ �ᬏ�ᬺᬸ � �Sᬯᬶᬸ�ᬼ�&ᬺᬡᬱᬬ�ᬺ �:ᬾᬱᬷᬬ ၬ �ᬼ�`ᬷᬺ�"ᬱᬸᬐᬬ (ᬥ�"�"ᬬ- 0005)
+            // �S& ᬡ�xᬱᬬ�ᬺᬸ (Old)
+// const customYlgId = `YLG-${currentYear}-${formattedIndex}`; 
+
+// �S& ᬡ�~�&ᬺ (New) - �ᬫ�Sᬱᬸᬡᬐᬭᬯ�ᬺᬸ �"ᬼᬱᬬ�ᬺᬸ�Sᬭᬯᬬᬺ�"ᬫ
+const customYlgId = `YLG-${currentYear}${formattedIndex}`;
+
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            await updateProfile(user, { displayName: name });
+
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                fullname: name,
+                email: email,
+                phone: phone,
+                balance: 0,
+                userIndex: newMemberIndex, 
+                ylgId: customYlgId, // �x� �ᬫ�Sᬱᬸᬬ Portfolio �"ᬾᬬ �"ᬼ�"�aᬷᬺ ID ᬡ�~�&ᬺ
+                tradeControl: "NORMAL",
+                kycStatus: "pending",
+                createdAt: new Date().toISOString()
+            });
+
+            await MySwal.fire({
+                icon: 'success',
+                title: 'ᬡᬱᬬ�ᬺ�"ᬼ�ᬺ�"ᬫ�~�`ᬺ',
+                text: `�&ᬬ�:�ᬺᬸ�~ᬽ�ᬺᬸᬁᬼ�ᬺᬸ ᬡᬱᬬ�ᬺ�"ᬼ�ᬺ�"ᬫ�~�`ᬺ�9 �~�ᬺ၏ ID �"ᬾᬬ ${customYlgId} �ᬼ�&ᬺ�"ᬫ�~�`ᬺ�9`,
+                timer: 3000,
+                showConfirmButton: true
+            });
+            
+            window.location.href = "login.html";
+
+        } catch (error) {
+            console.error(error);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> �&ᬬ�:�ᬺᬸ�~ᬽ�ᬺᬸ�:�ᬺ';
+            
+            let errorMsg = "ᬡᬬᬱᬬ�ᬷᬺ�ᬽ�ᬷᬺ၍ �"�:�"ᬫ�9 ";
+            if (error.code === 'auth/email-already-in-use') {
+                errorMsg = "ᬤᬡᬮᬸ�"ᬱᬸ�Sᬺ�ᬼ�ᬷᬺ ᬡᬬᬱᬬ�ᬷᬺ�ᬽ�ᬷᬺ�"ᬼᬮᬸ�~ᬬᬸ �ᬼ�&ᬺ�ᬱ�"ᬫ�~�`ᬺ�9";
+            } else if (error.code === 'auth/network-request-failed') {
+                errorMsg = "ᬡ�ᬺᬐᬬ�ᬬᬺ�Sᬭᬯ�ᬺᬸ �"ᬬᬱᬬ�ᬺᬸ�"ᬫ�9 �Sᬭᬯ�ᬺᬸ�"ᬼ�ᬺ�&�&ᬺ�"ᬱᬸ�"ᬫ�9";
+            }
+
+            MySwal.fire({ icon: 'error', title: 'ᬡ�"ᬾᬬᬸᬐ�&ᬺᬁᬯ�:ᬾᬭ�"ᬫ�~�`ᬺ', text: errorMsg });
+        }
+    });
+</script>
+</body>
+</html>

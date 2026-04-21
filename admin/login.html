@@ -1,0 +1,173 @@
+�<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YLG Admin - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root { --bg: #111111; --gold: #FFD700; --card: #1A1A1A; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .login-card {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            width: 100%;
+            max-width: 350px;
+            border-top: 4px solid var(--gold);
+            text-align: center;
+        }
+        .login-card h2 { color: var(--gold); margin-bottom: 25px; }
+        .input-group { position: relative; margin-bottom: 20px; }
+        .input-group i { position: absolute; left: 15px; top: 12px; color: #555; }
+        input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            background: #000;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--gold); box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--gold);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+            color: #000;
+        }
+        button:hover { background: #e6c200; transform: translateY(-2px); }
+        button:disabled { background: #555; cursor: not-allowed; transform: none; }
+        .back-link { margin-top: 20px; display: block; color: #888; text-decoration: none; font-size: 13px; }
+        .back-link:hover { color: var(--gold); }
+    </style>
+    <link rel="stylesheet" href="../mobile-responsive.css">
+</head>
+<body>
+
+    <div class="login-card">
+        <i class="fas fa-user-shield fa-3x" style="color: var(--gold); margin-bottom: 15px;"></i>
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Admin Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" id="loginBtn">LOGIN TO PANEL</button>
+        </form>
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Website</a>
+    </div>
+
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBCvOnGL0ptipChgxuCtHzviZb9DZ3MAIk",
+        authDomain: "ylg-bullion-7dac6.firebaseapp.com",
+        projectId: "ylg-bullion-7dac6",
+        storageBucket: "ylg-bullion-7dac6.firebasestorage.app",
+        messagingSenderId: "1076979932884",
+        appId: "1:1076979932884:web:8755edb4ccac71f69b6541"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const adminEmail = "junalama463@gmail.com";
+    const loginBtn = document.getElementById('loginBtn');
+
+    // --- �"ᬼ�ᬺ� �ᬺᬁᬻᬬᬺ (၁): Netlify �"ᬾᬬ Path �ᬼᬭᬐᬐᬺ�Sᬭᬯᬷ Redirect ᬬᬭᬯ �"ᬭᬯ�~ᬱᬁᬻᬬᬡᬱᬬ�ᬺ �Sᬯ�"ᬺᬁᬼ�ᬺᬸ ---
+    onAuthStateChanged(auth, (user) => {
+        if (user && user.email === adminEmail) {
+            console.log("Already logged in as admin");
+            window.location.href = "index.html"; // replace �ᬬᬺ href ᬬ �"ᬭᬯ�&ᬭᬐᬺᬁᬻ�:ᬐᬐᬺ�"ᬫᬐ�aᬺ
+        }
+    });
+
+    document.getElementById('loginForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (email !== adminEmail) {
+            Swal.fire({ 
+                icon: 'error', 
+                title: 'ᬝ�ᬺᬁᬽ�ᬷᬺ�"�:ᬾᬭ�"ᬫ', 
+                text: 'ᬤᬡᬮᬸ�"ᬱᬸ�Sᬺ�~�`ᬺ Admin ᬡᬬᬱᬬ�ᬷᬺ�"�xᬯᬐᬺ�"ᬫ�9', 
+                background: '#1a1a1a', 
+                color: '#fff',
+                confirmButtonColor: '#FFD700'
+            });
+            return;
+        }
+
+        loginBtn.disabled = true;
+        loginBtn.innerText = "Checking Authentication...";
+
+        try {
+            // --- �"ᬼ�ᬺ� �ᬺᬁᬻᬬᬺ (�): Persistence ᬬᬭᬯ default �ᬬᬸ�"ᬼᬮᬸ ᬝ�ᬺᬁᬼ�ᬺᬸ ---
+            await signInWithEmailAndPassword(auth, email, password);
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Welcome Back!',
+                text: 'Admin Dashboard �~ᬭᬯᬷ ᬝ�ᬺ�:ᬱᬬᬬᬺ�ᬱ�"ᬫ�~�`ᬺ...',
+                timer: 1500,
+                showConfirmButton: false,
+                background: '#1a1a1a',
+                color: '#fff'
+            }).then(() => {
+                // index.html �~ᬭᬯᬷ ᬐ�ᬺᬸ�~ᬽᬬᬸ�"�`ᬺ
+                window.location.href = "index.html"; 
+            });
+
+        } catch (error) {
+            console.error(error);
+            loginBtn.disabled = false;
+            loginBtn.innerText = "LOGIN TO PANEL";
+            
+            let errorMsg = "ᬡᬮᬸ�"ᬱᬸ�Sᬺ �~ᬭᬯᬷ�"�xᬯᬐᬺ �&ᬬᬬᬸᬝᬾᬬᬺ �"ᬾᬬᬸ�aᬽ�ᬺᬸ�ᬱ�"ᬫ�~�`ᬺ�9";
+            
+            // Error Code ᬐᬽᬱᬬᬭᬯ �"ᬭᬯ�&ᬯᬶᬡᬱᬬ�ᬺ ��`ᬷᬺᬁᬼ�ᬺᬸ
+            if (error.code === 'auth/network-request-failed') errorMsg = "ᬡ�ᬺᬐᬬ�ᬬᬺᬁᬻᬬᬺ� ᬬᬺ�"ᬾᬯ �"�:ᬾᬭ�"ᬫ �~ᬭᬯᬷ�"�xᬯᬐᬺ Firebase �ᬲᬷ �"ᬁᬻᬭᬐᬺ�"ᬭ�"ᬫ�9";
+            if (error.code === 'auth/too-many-requests') errorMsg = "ᬡᬬᬼᬭ�"ᬺᬬᬼᬭ�"ᬺᬬᬼᬭᬯᬸ�&ᬬᬸ�"ᬾᬯᬬᬼᬱᬬ�ᬷᬺ ᬁᬱᬐᬹᬐ�"ᬭᬐᬺ�ᬬᬸ�"ᬫ�~�`ᬺ�9";
+            if (error.code === 'auth/user-not-found') errorMsg = "ᬡᬬᬱᬬ�ᬷᬺ�:ᬾᬬ�"ᬐᬽᬱᬷ�"ᬫ�9";
+            if (error.code === 'auth/wrong-password') errorMsg = "�&ᬬᬬᬸᬝᬾᬬᬺ�"ᬾᬬᬸ�aᬽ�ᬺᬸ�ᬱ�"ᬫ�~�`ᬺ�9";
+            
+            Swal.fire({ 
+                icon: 'error', 
+                title: 'Login �"ᬡᬱᬬ�ᬺ�"ᬼ�ᬺ�"ᬫ', 
+                text: errorMsg, 
+                background: '#1a1a1a', 
+                color: '#fff',
+                confirmButtonColor: '#FFD700'
+            });
+        }
+    };
+</script>
+</body>
+</html>

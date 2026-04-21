@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - YLG Bullion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --color-dark-bg: #111111;
+            --color-panel-bg: #1A1A1A;
+            --color-gold-accent: #FFD700;
+            --color-text-light: #E0E0E0;
+            --color-text-fade: #A0A0A0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--color-dark-bg);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-card {
+            background: var(--color-panel-bg);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 350px;
+            text-align: center;
+        }
+        .logo-y { font-size: 40px; font-weight: bold; color: var(--color-gold-accent); margin-bottom: 10px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background: #333;
+            color: white;
+            box-sizing: border-box;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #FFD700;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn-login:hover { background: #e6c200; }
+        a { color: #A0A0A0; text-decoration: none; font-size: 13px; }
+    </style>
+    <link rel="stylesheet" href="mobile-responsive.css">
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="logo-y">YLG</div>
+        <h3>Login to Dashboard</h3>
+        
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" id="submitBtn" class="btn-login">LOGIN</button>
+        </form>
+        
+        <p style="margin-top: 20px;">
+            <a href="register.html">Don't have an account? Register</a>
+        </p>
+    </div>
+
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBCvOnGL0ptipChgxuCtHzviZb9DZ3MAIk",
+        authDomain: "ylg-bullion-7dac6.firebaseapp.com",
+        databaseURL: "https://ylg-bullion-7dac6-default-rtdb.firebaseio.com", 
+        projectId: "ylg-bullion-7dac6",
+        storageBucket: "ylg-bullion-7dac6.firebasestorage.app",
+        messagingSenderId: "1076979932884",
+        appId: "1:1076979932884:web:8755edb4ccac71f69b6541",
+        measurementId: "G-D16RR76JEP"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // SweetAlert2 ᬡᬐᬽᬬᬺ Default Theme �~ᬐᬺ�"ᬾᬐᬺᬁᬼ�ᬺᬸ
+    const Toast = Swal.mixin({
+        background: '#2A2A2A',
+        color: '#fff',
+        confirmButtonColor: '#FFD700'
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const submitBtn = document.getElementById('submitBtn');
+
+        // ᬁ�Sᬯᬐᬺᬬᬭᬯ ᬁᬱᬐᬹᬐ�"ᬭᬐᬺ�ᬬᬸ�"�aᬺ
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Checking...";
+
+        setPersistence(auth, browserLocalPersistence)
+            .then(() => {
+                return signInWithEmailAndPassword(auth, email, password);
+            })
+            .then((userCredential) => {
+                const user = userCredential.user;
+                const name = user.displayName || email.split('@')[0];
+
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userName', name);
+
+                // ᬡᬱᬬ�ᬺ�"ᬼ�ᬺᬬᬼᬱᬬ�ᬺᬸ Pop-up �"ᬼ�"�aᬺ
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Login ᬡᬱᬬ�ᬺ�"ᬼ�ᬺ�"ᬫ�~�`ᬺ�9',
+                    text: 'ᬁᬏ�&ᬱᬬ�ᬷᬺ�"ᬱᬸ�"ᬫ...',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.replace("index.html");
+                });
+            })
+            .catch((error) => {
+                console.error("Login Error:", error.code);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "LOGIN";
+
+                let errorMsg = "ᬡ�"ᬾᬬᬸᬐ�&ᬺᬁᬯ�:ᬾᬭ�ᬱ�"ᬫ�~�`ᬺ";
+                
+                if (error.code === 'auth/invalid-credential') {
+                    errorMsg = "Email �~ᬭᬯᬷ�"�xᬯᬐᬺ Password �"ᬾᬬᬸ�ᬱ�"ᬫ�~�`ᬺ�9";
+                } else if (error.code === 'auth/user-not-found') {
+                    errorMsg = "ᬤ Email �ᬼ�ᬷᬺ ᬡᬬᬱᬬ�ᬷᬺ�"�:ᬾᬭ�~ᬱᬸ�"ᬫ�9";
+                } else if (error.code === 'auth/network-request-failed') {
+                    errorMsg = "ᬡ�ᬺᬐᬬ�ᬬᬺ�Sᬭᬯ�ᬺᬸ�"ᬬᬱᬬ�ᬺᬸ�"ᬫ�9 VPN �~ᬭᬯᬷ�"�xᬯᬐᬺ �Sᬭᬯ�ᬺᬸᬬᬭᬯ �"ᬼ�ᬺ�&�&ᬺ�"ᬱᬸ�"ᬫ�9";
+                } else {
+                    errorMsg = error.message;
+                }
+
+                // Error Pop-up �"ᬼ�"�aᬺ (URL ᬬᬼᬮᬸ �"�"ᬫᬐᬱᬬᬷ�"ᬫ)
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Login �"ᬡᬱᬬ�ᬺ�"ᬼ�ᬺ�"ᬫ',
+                    text: errorMsg
+                });
+            });
+    });
+</script>
+
+</body>
+</html>
